@@ -37,12 +37,17 @@ const templateTableComponent = ({id, name, result, status, filtered = false, num
 	`
 }
 
+const templateStatusComponent = ({id, title}) => {
+	return `
+	<option value="${id}">${title}</option>
+	`
+}
 
 store.subscribe(()=> console.log(store.getState()))
 
 const render = (select = -1) => {
 	let itemNumber = 1
-	const {players} = store.getState()
+	const {players, statuses} = store.getState()
 	let filteredPlayers = players.map((item)=> {
 		item.number = itemNumber
 		itemNumber++
@@ -57,6 +62,7 @@ const render = (select = -1) => {
 	document.getElementById('results').innerHTML = filteredPlayers
 		.map(templateTableComponent)
 		.join('')
+	statusSelect.innerHTML = statuses.map(templateStatusComponent).join('')
 }
 
 render()
