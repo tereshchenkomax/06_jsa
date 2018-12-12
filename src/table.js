@@ -37,32 +37,37 @@ const templateTableComponent = ({id, name, result, status, filtered = false, num
 	`
 }
 
-const templateStatusComponent = ({id, title}) => {
+const templateStatusComponent = ({id, title, selected}) => {
 	return `
-	<option value="${id}">${title}</option>
+	<option value="${id}" ${selected ? 'selected' : ''}>${title}</option>
 	`
 }
 
 store.subscribe(()=> console.log(store.getState()))
 
-const render = (select = -1) => {
+const render = (select) => {
 	let itemNumber = 1
 	const {players, statuses} = store.getState()
-	let filteredPlayers = players.map((item)=> {
-		item.number = itemNumber
+	let filteredPlayers = players.map((player)=> {
+		player.number = itemNumber
 		itemNumber++
-		if (select != -1 && item.status == select) {
-			item.filtered = true
-			return item
+		if (player.status == select) {
+			player.filtered = true
+			return player
 		} else {
-			item.filtered = false
-			return item
+			player.filtered = false
+			return player
 		}
 	})
+	let filteredStatuses = statuses.map(status => {
+		(status.id == select) ? status.selected = true : status.selected = false
+		return status
+	})
+	console.log(filteredStatuses)
+	statusSelect.innerHTML = filteredStatuses.map(templateStatusComponent).join('')
 	document.getElementById('results').innerHTML = filteredPlayers
 		.map(templateTableComponent)
 		.join('')
-	statusSelect.innerHTML = statuses.map(templateStatusComponent).join('')
 }
 
 render()
