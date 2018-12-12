@@ -1,5 +1,5 @@
 import {data} from './data'
-import {createStore} from './redux/Store'
+import {createStore} from 'redux'
 import {generate as id} from 'shortid'
 
 const ADD = 'ADD'

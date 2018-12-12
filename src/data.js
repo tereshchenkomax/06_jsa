@@ -15,7 +15,7 @@ export const data = {
 	],
 	statuses: [
 		{id:1, title: 'pro'},
-		{id:2, title: 'beginer'},
+		{id:2, title: 'beginner'},
 		{id:3, title: 'amateur'}
 	]
 }
