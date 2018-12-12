@@ -26,7 +26,7 @@ function reducer(state, action) {
 	}
 }
 
-const templateTableComponent = ({id, name, result, status, filtered = false, number}) => {
+const templateTableComponent = ({id, name, result, status, filtered, number}) => {
 	return `
 	<tr id="el-${id}" class="${filtered ? 'table-info' : ''}">
 		<td>${number}</td>
@@ -38,9 +38,7 @@ const templateTableComponent = ({id, name, result, status, filtered = false, num
 }
 
 const templateStatusComponent = ({id, title, selected}) => {
-	return `
-	<option value="${id}" ${selected ? 'selected' : ''}>${title}</option>
-	`
+	return `<option value="${id}"${selected ? 'selected' : ''}>${title}</option>`
 }
 
 store.subscribe(()=> console.log(store.getState()))
@@ -51,19 +49,13 @@ const render = (select) => {
 	let filteredPlayers = players.map((player)=> {
 		player.number = itemNumber
 		itemNumber++
-		if (player.status == select) {
-			player.filtered = true
-			return player
-		} else {
-			player.filtered = false
-			return player
-		}
+		player.filtered = player.status == select
+		return player
 	})
 	let filteredStatuses = statuses.map(status => {
-		(status.id == select) ? status.selected = true : status.selected = false
+		status.selected = status.id == select
 		return status
 	})
-	console.log(filteredStatuses)
 	statusSelect.innerHTML = filteredStatuses.map(templateStatusComponent).join('')
 	document.getElementById('results').innerHTML = filteredPlayers
 		.map(templateTableComponent)
