@@ -14,15 +14,16 @@ function actionAdd(amount) {
 }
 
 function reducer(state, action) {
+	let newState = Object.assign({},state)
 	switch (action.type) {
 	case ADD:
-		state.players.push({
+		newState.players.push({
 			id: id(), name: action.amount, result: 1, status: 3
 		})
-		return state
+		return newState
 
 	default:
-		return state
+		return newState
 	}
 }
 
@@ -76,3 +77,4 @@ document
 statusSelect.addEventListener('change',()=>{
 	render(statusSelect.value)
 })
+
